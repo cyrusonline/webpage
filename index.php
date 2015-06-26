@@ -1,4 +1,6 @@
-
+<?php include 'config/config.php';?>
+<?php include 'libraries/Database.php';?>
+<?php $db = new DataBase ();?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
