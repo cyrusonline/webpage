@@ -1,6 +1,11 @@
 <?php include 'config/config.php';?>
 <?php include 'libraries/Database.php';?>
-<?php $db = new DataBase ();?>
+<?php $db = new DataBase ();
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -67,9 +72,9 @@
         <tr>
           <th>#</th>
           <th>Question</th>
+          <th>Paper</th>
           <th>Answer</th>
           <th>Remark</th>
-          <th>Video</th>
         </tr>
       </thead>
       <tbody>
