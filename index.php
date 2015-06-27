@@ -1,9 +1,9 @@
 <?php include 'config/config.php';?>
 <?php include 'libraries/Database.php';?>
 <?php $db = new DataBase ();
+$query = "SELECT * FROM topics";
 
-
-
+$topics = $db->select($query);
 
 ?>
 <!DOCTYPE html>
@@ -80,41 +80,40 @@
       <tbody>
         <tr>
           <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Play</td>
+          <td>2005 Q1</td>
+          <td>I</td>
+          <td>27cm</td>
+          <td>Some students....</td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>Play</td>
+           <tr>
+          <th scope="row">1</th>
+          <td>2005 Q1</td>
+          <td>I</td>
+          <td>27cm</td>
+          <td>Some students....</td>
         </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>Play</td>
+           <tr>
+          <th scope="row">1</th>
+          <td>2005 Q1</td>
+          <td>I</td>
+          <td>27cm</td>
+          <td>Some students....</td>
         </tr>
+       
+       
       </tbody>
     </table>
     </div>
      <div class="col-md-4">
    <div  id="sidebar">
+
           <div class="list-group">
-            <a href="#" class="list-group-item active">Link</a>
+             <?php while($row = $topics->fetch_assoc()):?>
+   
+            <a href="#" class="list-group-item"><?php echo $row['topic_name'];?></a>
             <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
+        
+            <?php endwhile;?>
           </div>
         </div><!--/.sidebar-offcanvas-->
         </div>
