@@ -1,10 +1,22 @@
 <?php include 'config/config.php';?>
 <?php include 'libraries/Database.php';?>
 <?php $db = new DataBase ();
+
+$topic_code = $_GET['topic_code'];
+
+//Get the questions from the selected topic
+$query = 'SELECT * FROM movies WHERE question_code IN (SELECT question_code FROM connect WHERE topic_code ="'.$topic_code.'")';
+$questions = $db->select($query);
+
+//Display all the topics that can be selected from the database
 $query = "SELECT * FROM topics";
 
 $topics = $db->select($query);
 
+//Get the main topic name
+
+$query = 'SELECT * FROM topics WHERE topic_code = "'.$topic_code.'" ';
+$maintopic = $db->select($query)->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +76,7 @@ $topics = $db->select($query);
     <!-- Begin page content -->
     <div class="container">
       <div class="page-header">
-        <h1>Mathematics topics</h1>
+        <h1> <?php echo $maintopic['topic_name'];?></h1>
       </div>
       <div class="col-md-8">
        <table class="table table-striped">
@@ -78,13 +90,16 @@ $topics = $db->select($query);
         </tr>
       </thead>
       <tbody>
+      <?php while($row = $questions->fetch_assoc()):?>
         <tr>
           <th scope="row">1</th>
-          <td>2005 Q1</td>
-          <td>I</td>
+          <td><a href="https://www.youtube.com/watch?v=<?php echo $row['link'];?>"><?php echo $row['year'];?> Question <?php echo $row['question_no'];?></a></td>
+          <td><?php echo $row['paper'];?></td>
           <td>27cm</td>
           <td>Some students....</td>
         </tr>
+        <?php endwhile;?>
+        
            <tr>
           <th scope="row">1</th>
           <td>2005 Q1</td>
@@ -110,7 +125,7 @@ $topics = $db->select($query);
           <div class="list-group">
              <?php while($row = $topics->fetch_assoc()):?>
    
-            <a href="#" class="list-group-item"><?php echo $row['topic_name'];?></a>
+            <a href="index.php?topic_code=<?php echo $row['topic_code'];?>" class="list-group-item"><?php echo $row['topic_name'];?></a>
             <a href="#" class="list-group-item">Link</a>
         
             <?php endwhile;?>
