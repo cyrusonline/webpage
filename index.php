@@ -1,22 +1,37 @@
 <?php include 'config/config.php';?>
 <?php include 'libraries/Database.php';?>
 <?php $db = new DataBase ();
+if(isset($_GET['topic_code'])){
+	$topic_code = $_GET['topic_code'];
+	
+	//Get the questions from the selected topic
+	$query = 'SELECT * FROM movies WHERE question_code IN (SELECT question_code FROM connect WHERE topic_code ="'.$topic_code.'")';
+	$questions = $db->select($query);
+	
+	//Get the main topic name
+	
+	$query = 'SELECT * FROM topics WHERE topic_code = "'.$topic_code.'" ';
+	$maintopic = $db->select($query)->fetch_assoc();
+	
+	
+}else {
+	
+	$maintopic['topic_name']="Mathematics topics";
+	$topic_code="";
+	
 
-$topic_code = $_GET['topic_code'];
+}
+	
 
-//Get the questions from the selected topic
-$query = 'SELECT * FROM movies WHERE question_code IN (SELECT question_code FROM connect WHERE topic_code ="'.$topic_code.'")';
-$questions = $db->select($query);
+
+
 
 //Display all the topics that can be selected from the database
 $query = "SELECT * FROM topics";
 
 $topics = $db->select($query);
 
-//Get the main topic name
 
-$query = 'SELECT * FROM topics WHERE topic_code = "'.$topic_code.'" ';
-$maintopic = $db->select($query)->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,19 +48,15 @@ $maintopic = $db->select($query)->fetch_assoc();
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/colorbox.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/custom.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/jquery.colorbox-min.js"></script>
+   
+  
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -90,19 +101,28 @@ $maintopic = $db->select($query)->fetch_assoc();
         </tr>
       </thead>
       <tbody>
+
+      <?php if($topic_code!=""):?>
       <?php while($row = $questions->fetch_assoc()):?>
+      
         <tr>
           <th scope="row">1</th>
-          <td><a href="https://www.youtube.com/watch?v=<?php echo $row['link'];?>"><?php echo $row['year'];?> Question <?php echo $row['question_no'];?></a></td>
+          <td><a class="youtube" href="http://www.youtube.com/embed/<?php echo $row['link'];?>"><?php echo $row['year'];?> Question <?php echo $row['question_no'];?></a></td>
           <td><?php echo $row['paper'];?></td>
           <td>27cm</td>
           <td>Some students....</td>
         </tr>
         <?php endwhile;?>
+   
+          <?php else:?>
+        
+<h1>There are no posts yet</h1>
+<?php endif;?>
         
            <tr>
           <th scope="row">1</th>
-          <td>2005 Q1</td>
+
+          <td><a class="youtube" href=" http://www.youtube.com/embed/2JMoPFUYeLg?rel=0&amp;wmode=transparent">2005 Q1</a></td>
           <td>I</td>
           <td>27cm</td>
           <td>Some students....</td>
@@ -149,5 +169,14 @@ $maintopic = $db->select($query)->fetch_assoc();
     <script src="../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="js/jquery.colorbox-min.js"></script>
+    <script>
+			$(document).ready(function(){
+				//Examples of how to assign the Colorbox event to elements
+				
+				$(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
+			
+			});
+		</script>
   </body>
 </html>
