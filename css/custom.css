@@ -37,3 +37,30 @@ body > .container {
 code {
   font-size: 80%;
 }
+
+.navbar{
+	height: 40px !important;
+	background:#c1f9f8;
+	border:0;
+	margin-bottom:30px;
+	
+	}
+	
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand{
+	color:#ff0000!important;
+	
+}
+
+.navbar a:hover, .navbar li.active a{
+	background:none !important;
+	
+}
+
+.navbar-brand{
+	padding:10px 0 0 0;
+	color:#fff;
+}
+
+.navbar-nav>li>a{
+	padding:10px 10px 0 10px;
+}
